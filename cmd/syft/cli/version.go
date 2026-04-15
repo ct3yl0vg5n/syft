@@ -16,6 +16,8 @@ func versionCmd() *cobra.Command {
 		Use:   "version",
 		Short: "Show the version of this tool",
 		Long:  "Display version, commit, build date, Go runtime, and platform information.",
+		// Aliases allow `syft v` as a shorthand for convenience
+		Aliases: []string{"v"},
 		RunE: func(cmd *cobra.Command, _ []string) error {
 			v := version.FromBuild()
 			fmt := version.Format(outputFormat)
