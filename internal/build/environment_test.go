@@ -47,6 +47,8 @@ func TestEnvironment_String(t *testing.T) {
 	assert.Contains(t, result, "compiler=gc")
 	assert.Contains(t, result, "platform=linux/amd64")
 	assert.Contains(t, result, "cgo=disabled")
+	// also verify the result is non-empty overall
+	assert.NotEmpty(t, result)
 }
 
 func TestEnvironment_String_CGOEnabled(t *testing.T) {
@@ -59,4 +61,19 @@ func TestEnvironment_String_CGOEnabled(t *testing.T) {
 
 	result := env.String()
 	assert.Contains(t, result, "cgo=enabled")
+}
+
+// TestEnvironment_String_AllFields verifies that all expected fields appear in the output string.
+func TestEnvironment_String_AllFields(t *testing.T) {
+	env := Environment{
+		GoVersion:  "go1.22.1",
+		Compiler:   "gc",
+		Platform:   "darwin/arm64",
+		CGOEnabled: true,
+	}
+
+	result := env.String()
+	for _, expected := range []string{"go=go1.22.1", "compiler=gc", "platform=darwin/arm64", "cgo=enabled"} {
+		assert.Contains(t, result, expected)
+	}
 }
