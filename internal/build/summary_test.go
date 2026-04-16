@@ -58,5 +58,16 @@ func TestShortVersion_ShortCommit(t *testing.T) {
 		Commit:  "abc",
 	}
 	result := ShortVersion(info)
+	// commits shorter than 7 chars should not be appended in parentheses
+	assert.Equal(t, "v0.90.0", result)
+}
+
+func TestShortVersion_ExactlySevenChars(t *testing.T) {
+	// boundary case: a commit of exactly 7 chars should not be treated as "long"
+	info := Info{
+		Version: "v0.90.0",
+		Commit:  "deadbee",
+	}
+	result := ShortVersion(info)
 	assert.Equal(t, "v0.90.0", result)
 }
