@@ -30,11 +30,12 @@ func isCGOEnabled() bool {
 }
 
 // String returns a human-readable representation of the environment.
+// Format: "go=<version> compiler=<compiler> platform=<os>/<arch> cgo=<enabled|disabled> numcpu=<n>"
 func (e Environment) String() string {
 	cgo := "disabled"
 	if e.CGOEnabled {
 		cgo = "enabled"
 	}
-	return fmt.Sprintf("go=%s compiler=%s platform=%s cgo=%s",
-		e.GoVersion, e.Compiler, e.Platform, cgo)
+	return fmt.Sprintf("go=%s compiler=%s platform=%s cgo=%s numcpu=%d",
+		e.GoVersion, e.Compiler, e.Platform, cgo, runtime.NumCPU())
 }
