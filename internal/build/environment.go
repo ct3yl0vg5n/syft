@@ -11,6 +11,7 @@ type Environment struct {
 	Compiler  string `json:"compiler"  yaml:"compiler"`
 	Platform  string `json:"platform"  yaml:"platform"`
 	CGOEnabled bool  `json:"cgoEnabled" yaml:"cgoEnabled"`
+	NumCPU    int    `json:"numCPU" yaml:"numCPU"`
 }
 
 // GetEnvironment returns the current build environment information.
@@ -20,6 +21,7 @@ func GetEnvironment() Environment {
 		Compiler:   runtime.Compiler,
 		Platform:   fmt.Sprintf("%s/%s", runtime.GOOS, runtime.GOARCH),
 		CGOEnabled: isCGOEnabled(),
+		NumCPU:     runtime.NumCPU(),
 	}
 }
 
@@ -37,5 +39,5 @@ func (e Environment) String() string {
 		cgo = "enabled"
 	}
 	return fmt.Sprintf("go=%s compiler=%s platform=%s cgo=%s numcpu=%d",
-		e.GoVersion, e.Compiler, e.Platform, cgo, runtime.NumCPU())
+		e.GoVersion, e.Compiler, e.Platform, cgo, e.NumCPU)
 }
