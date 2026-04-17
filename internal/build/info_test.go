@@ -21,6 +21,7 @@ func TestGet_Defaults(t *testing.T) {
 
 func TestGet_PlatformFormat(t *testing.T) {
 	info := Get()
+	// Platform must follow the os/arch convention used by Go toolchain
 	require.Contains(t, info.Platform, "/",
 		"platform should be in the format os/arch")
 }
@@ -33,6 +34,8 @@ func TestIsDevBuild_Default(t *testing.T) {
 func TestInfo_Fields(t *testing.T) {
 	info := Get()
 
+	// Ensure none of the build info fields are accidentally left empty,
+	// even in dev builds where defaults should still be populated.
 	fields := map[string]string{
 		"Version":   info.Version,
 		"Commit":    info.Commit,
