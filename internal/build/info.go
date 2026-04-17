@@ -32,6 +32,7 @@ func Get() Info {
 }
 
 // IsDevBuild returns true if the binary was not built with version info.
+// This is useful for skipping update checks or telemetry in local dev builds.
 func IsDevBuild() bool {
 	return version == "(dev)"
 }
