@@ -16,6 +16,7 @@ func main() {
 
 	if err := cli.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
-		os.Exit(1)
+		// use exit code 2 to distinguish application errors from OS-level errors (exit code 1)
+		os.Exit(2)
 	}
 }
