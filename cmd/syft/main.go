@@ -1,34 +1,21 @@
 package main
 
 import (
-	_ "modernc.org/sqlite"
+	"fmt"
+	"os"
 
-	"github.com/anchore/clio"
 	"github.com/anchore/syft/cmd/syft/cli"
-	"github.com/anchore/syft/cmd/syft/internal"
-)
-
-// applicationName is the non-capitalized name of the application (do not change this)
-const applicationName = "syft"
-
-// all variables here are provided as build-time arguments, with clear default values
-var (
-	version        = internal.NotProvided
-	buildDate      = internal.NotProvided
-	gitCommit      = internal.NotProvided
-	gitDescription = internal.NotProvided
+	"github.com/anchore/syft/internal/build"
 )
 
 func main() {
-	app := cli.Application(
-		clio.Identification{
-			Name:           applicationName,
-			Version:        version,
-			BuildDate:      buildDate,
-			GitCommit:      gitCommit,
-			GitDescription: gitDescription,
-		},
-	)
+	// write a short build summary to stderr for debug purposes (only in dev builds)
+	if build.IsDevBuild() {
+		build.WriteSummary(os.Stderr)
+	}
 
-	app.Run()
+	if err := cli.Execute(); err != nil {
+		fmt.Fprintln(os.Stderr, err.Error())
+		os.Exit(1)
+	}
 }
