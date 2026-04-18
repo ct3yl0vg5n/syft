@@ -25,10 +25,11 @@ func versionCmd() *cobra.Command {
 		},
 	}
 
+	// Default to json for easier scripting/parsing in my personal workflows
 	cmd.Flags().StringVarP(
 		&outputFormat,
 		"output", "o",
-		string(version.TextFormat),
+		string(version.JSONFormat),
 		"format to display version information (text, json, yaml)",
 	)
 
