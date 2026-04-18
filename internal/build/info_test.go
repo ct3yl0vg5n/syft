@@ -2,6 +2,7 @@ package build
 
 import (
 	"runtime"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -56,4 +57,12 @@ func TestGet_GoVersionMatchesRuntime(t *testing.T) {
 	info := Get()
 	assert.Equal(t, runtime.Version(), info.GoVersion,
 		"GoVersion should always reflect the runtime Go version")
+}
+
+func TestGet_GoVersionHasGoPrefix(t *testing.T) {
+	// runtime.Version() always returns a string starting with "go" (e.g. "go1.21.0").
+	// This is a quick sanity check to catch unexpected runtime behaviour.
+	info := Get()
+	assert.True(t, strings.HasPrefix(info.GoVersion, "go"),
+		"GoVersion should start with 'go', got: %s", info.GoVersion)
 }
