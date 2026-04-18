@@ -49,3 +49,11 @@ func TestInfo_Fields(t *testing.T) {
 		assert.NotEmpty(t, val, "field %s should not be empty", name)
 	}
 }
+
+func TestGet_GoVersionMatchesRuntime(t *testing.T) {
+	// Sanity check: the reported Go version should always match the runtime,
+	// since it's sourced directly from runtime.Version().
+	info := Get()
+	assert.Equal(t, runtime.Version(), info.GoVersion,
+		"GoVersion should always reflect the runtime Go version")
+}
