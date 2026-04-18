@@ -71,3 +71,13 @@ func TestShortVersion_ExactlySevenChars(t *testing.T) {
 	result := ShortVersion(info)
 	assert.Equal(t, "v0.90.0", result)
 }
+
+func TestShortVersion_EmptyCommit(t *testing.T) {
+	// if no commit is set (e.g. local dev build), version alone should be returned
+	info := Info{
+		Version: "v0.90.0",
+		Commit:  "",
+	}
+	result := ShortVersion(info)
+	assert.Equal(t, "v0.90.0", result)
+}
