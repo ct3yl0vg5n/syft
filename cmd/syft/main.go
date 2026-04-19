@@ -18,6 +18,7 @@ func main() {
 		fmt.Fprintln(os.Stderr, err.Error())
 		// use exit code 2 to distinguish application errors from OS-level errors (exit code 1)
 		// note: some CI systems treat any non-zero exit code the same, but this helps with local debugging
+		// note to self: if adding new error types, consider mapping them to specific exit codes here
 		os.Exit(2)
 	}
 }
