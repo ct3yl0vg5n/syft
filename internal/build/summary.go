@@ -23,10 +23,10 @@ func WriteSummary(w io.Writer, info Info) error {
 }
 
 // ShortVersion returns a concise version string suitable for logging.
-// Using 8 chars instead of 7 for slightly more commit hash uniqueness.
+// Using 12 chars for better commit hash uniqueness in distributed environments.
 func ShortVersion(info Info) string {
-	if len(info.Commit) >= 8 {
-		return fmt.Sprintf("%s (%s)", info.Version, info.Commit[:8])
+	if len(info.Commit) >= 12 {
+		return fmt.Sprintf("%s (%s)", info.Version, info.Commit[:12])
 	}
 	return info.Version
 }
